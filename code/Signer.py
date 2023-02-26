@@ -24,6 +24,27 @@ def verify_pkcs1(hash_chosen, key, signature):
         print("The signature is not valid.")
 
 
+def sign_pss(hash_chosen, key_source): #signer for Rsa PKCS#1 PSS
+    keys = {
+        'generate': RSA.generate(2048)
+    }
+    key = keys[key_source]
+    h = hashes[hash_chosen]
+    signature = pss.new(key).sign(h)
+    # print(signature)
+    return key, signature
+
+
+def verify_pss(hash_chosen, key, signature):
+    try:
+        h = hashes[hash_chosen]
+        key = key.publickey()
+        pss.new(key).verify(h, signature)
+        print("The signature is valid.")
+    except (ValueError, TypeError):
+        print("The signature is not valid.")
+
+
 message = b'To be signed'
 hashes = {
     '1': SHA256.new(message),
@@ -32,10 +53,11 @@ hashes = {
 }
 
 if __name__ == "__main__":
-    a = ""
+    a = "1"
     match a:
         case "":
             key, signature = sign_pkcs1('1', 'generate')
             verify_pkcs1('1', key, signature)
         case "1":
-            pass
+            key, signature = sign_pss('1', 'generate')
+            verify_pss('1', key, signature)

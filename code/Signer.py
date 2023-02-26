@@ -53,7 +53,7 @@ hashes = {
 }
 
 if __name__ == "__main__":
-    a = "1"
+    a = "2"
     match a:
         case "":
             key, signature = sign_pkcs1('1', 'generate')
@@ -61,3 +61,5 @@ if __name__ == "__main__":
         case "1":
             key, signature = sign_pss('1', 'generate')
             verify_pss('1', key, signature)
+        case "2":
+            pass

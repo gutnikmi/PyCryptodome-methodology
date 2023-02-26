@@ -24,7 +24,7 @@ hash_used = 1
 # 2 - PKCS#1 PSS
 # 3 - EdDSA
 # 4 - DSA and ECDSA
-alg_used = 1
+alg_used = 3
 
 
 # input
@@ -64,7 +64,7 @@ elif alg_used == 2:
     signature = pss.new(key).sign(h)
 elif alg_used == 3:
     signer = eddsa.new(key2, 'rfc8032')
-    signature = eddsa.sign(message)
+    signature = signer.sign(message)
 elif alg_used == 4:
     signer = DSS.new(key2, 'fips-186-3')
     signature = signer.sign(h)
@@ -80,7 +80,7 @@ try:
         verifier = pss.new(key)
         verifier.verify(h, signature)
     elif alg_used == 3:
-        verifier = eddsa.new(key, 'rfc8032')
+        verifier = eddsa.new(key2, 'rfc8032')
         verifier.verify(message, signature)
     elif alg_used == 4:
         verifier = DSS.new(key, 'fips-186-3')

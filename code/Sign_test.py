@@ -18,7 +18,7 @@ key_used = 1
 # 1 - SHA256
 # 2 - SHA384
 # 3 - SHA512
-hash_used = 3
+hash_used = 2
 # alg used
 # 1 - PKCS#1 v1.5
 # 2 - PKCS#1 PSS
@@ -39,7 +39,7 @@ else:
 if key_used == 1:
     key = RSA.generate(2048)
     key2 = ECC.generate(curve='ed25519') # todo размерность ключей в презентации 8
-    key3 = ECC.generate(curve='ed448') #DSA.generate(2048)
+    key3 = ECC.generate(curve='P-521') #DSA.generate(2048)
 elif key_used == 2:
     key = RSA.import_key(open('private_key.der').read())
 elif key_used == 3:
@@ -89,5 +89,5 @@ try:
     else:
         raise Exception(f"Failed to load signature algorithm \n")
     print("The signature is valid.")
-except (ValueError, TypeError):
-   print("The signature is not valid.")
+except (ValueError, TypeError) as e:
+   print("The signature is not valid.", e)

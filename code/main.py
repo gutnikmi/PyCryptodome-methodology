@@ -1,2 +1,3 @@
+
 if __name__ == "__main__":
-    print("краб лоцируется")
+    print("this works")

@@ -1,6 +1,6 @@
 from Crypto.Signature import pkcs1_15, DSS, pss, eddsa
 from Crypto.Hash import SHA256, SHA384, SHA512
-from Crypto.PublicKey import RSA, ECC
+from Crypto.PublicKey import RSA, ECC, DSA
 
 import hashlib
 
@@ -18,13 +18,13 @@ key_used = 1
 # 1 - SHA256
 # 2 - SHA384
 # 3 - SHA512
-hash_used = 1
+hash_used = 3
 # alg used
 # 1 - PKCS#1 v1.5
 # 2 - PKCS#1 PSS
 # 3 - EdDSA
 # 4 - DSA and ECDSA
-alg_used = 3
+alg_used = 4
 
 
 # input
@@ -39,6 +39,7 @@ else:
 if key_used == 1:
     key = RSA.generate(2048)
     key2 = ECC.generate(curve='ed25519') # todo размерность ключей в презентации 8
+    key3 = ECC.generate(curve='ed448') #DSA.generate(2048)
 elif key_used == 2:
     key = RSA.import_key(open('private_key.der').read())
 elif key_used == 3:
@@ -66,7 +67,7 @@ elif alg_used == 3:
     signer = eddsa.new(key2, 'rfc8032')
     signature = signer.sign(message)
 elif alg_used == 4:
-    signer = DSS.new(key2, 'fips-186-3')
+    signer = DSS.new(key3, 'fips-186-3')
     signature = signer.sign(h)
 else:
     raise Exception(f"Failed to load signature algorithm \n")
@@ -83,7 +84,7 @@ try:
         verifier = eddsa.new(key2, 'rfc8032')
         verifier.verify(message, signature)
     elif alg_used == 4:
-        verifier = DSS.new(key, 'fips-186-3')
+        verifier = DSS.new(key3, 'fips-186-3')
         verifier.verify(h, signature)
     else:
         raise Exception(f"Failed to load signature algorithm \n")

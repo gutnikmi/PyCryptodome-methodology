@@ -1,3 +1,17 @@
+from Signer import sign_pkcs1, sign_pss, sign_eddsa, sign_dsa, sign_ecdsa
+from Signer import verify_pkcs1, verify_pss, verify_eddsa, verify_dsa, verify_ecdsa
+
+
+def signer_func(alg, hash_chosen, key_source, message):
+    signers = {
+        '0': sign_pkcs1,
+        '1': sign_pss,
+        '2': sign_eddsa,
+        '3': sign_dsa,
+        '4': sign_ecdsa
+    }
+    return signers[alg](hash_chosen, key_source, message)
+
 
 if __name__ == "__main__":
     print("Что вы хотите сделать? (введите номер варианта без точки) \n")

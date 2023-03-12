@@ -18,7 +18,7 @@ key_used = 1
 # 1 - SHA256
 # 2 - SHA384
 # 3 - SHA512
-hash_used = 2
+hash_used = 1
 # alg used
 # 1 - PKCS#1 v1.5
 # 2 - PKCS#1 PSS

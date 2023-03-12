@@ -27,8 +27,27 @@ if __name__ == "__main__":
                   " \n 4. DSA"
                   " \n 5. ECDSA")
             match input():
-                case '1':
-                    pass
+                case '1':  # Rsa PKCS#1 v1.5"
+                    print("Введите 1 чтобы подписать и 2 чтобы проверить подпись")
+                    if input() == '1':  # sign
+                        print("Выберите Хэш:"
+                              " \n 1. SHA256"
+                              " \n 2. SHA384"
+                              " \n 3. Sha512")
+                        h = input()
+                        print("Выберите источник ключа:"
+                              "1. Сгенерировать ключ"
+                              "2. Вставить в консоль"
+                              "3. Импорт из файла")
+
+
+                    else:
+                        if input() == '2':  # verify
+                            print("Выберите Хэш:"
+                                  " \n 1. SHA256"
+                                  " \n 2. SHA384"
+                                  " \n 3. Sha512")
+                            h = input()
         case'2':
             pass
 

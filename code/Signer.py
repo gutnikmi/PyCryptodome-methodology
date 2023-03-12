@@ -8,6 +8,7 @@ def sign_pkcs1(hash_chosen, key_source, message = b'To be signed'): #signer for 
         'generate': RSA.generate(2048)
     }
     key = keys[key_source]
+    # print(key.export_key())
     hashes = {
         '1': SHA256.new(message),
         '2': SHA384.new(message),
@@ -163,7 +164,7 @@ def verify_ecdsa(hash_chosen, key, signature, message = b'To be signed'):
 
 
 if __name__ == "__main__":
-    a = "4"
+    a = "0"
     match a:
         case "0":
             key, signature = sign_pkcs1('1', 'generate')

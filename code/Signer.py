@@ -3,7 +3,7 @@ from Crypto.Hash import SHA256, SHA384, SHA512
 from Crypto.PublicKey import RSA, ECC, DSA
 
 
-def sign_pkcs1(hash_chosen, key_source, message = b'To be signed'): #signer for Rsa PKCS#1 v1.5
+def sign_pkcs1(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 v1.5
     keys = {
         'generate': RSA.generate(2048)
     }
@@ -20,7 +20,7 @@ def sign_pkcs1(hash_chosen, key_source, message = b'To be signed'): #signer for 
     return key, signature
 
 
-def verify_pkcs1(hash_chosen, key, signature, message = b'To be signed'):
+def verify_pkcs1(hash_chosen, key, signature, message=b'To be signed'):
     try:
         hashes = {
             '1': SHA256.new(message),
@@ -35,7 +35,7 @@ def verify_pkcs1(hash_chosen, key, signature, message = b'To be signed'):
         print("The signature is not valid.")
 
 
-def sign_pss(hash_chosen, key_source, message = b'To be signed'): #signer for Rsa PKCS#1 PSS
+def sign_pss(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 PSS
     keys = {
         'generate': RSA.generate(2048)
     }
@@ -51,7 +51,7 @@ def sign_pss(hash_chosen, key_source, message = b'To be signed'): #signer for Rs
     return key, signature
 
 
-def verify_pss(hash_chosen, key, signature, message = b'To be signed'):
+def verify_pss(hash_chosen, key, signature, message=b'To be signed'):
     try:
         hashes = {
             '1': SHA256.new(message),
@@ -66,7 +66,7 @@ def verify_pss(hash_chosen, key, signature, message = b'To be signed'):
         print("The signature is not valid.")
 
 
-def sign_eddsa(key_source, message = b'To be signed'): #signer for eddsa
+def sign_eddsa(key_source, message=b'To be signed'):  # signer for eddsa
     keys = {
         'generate': ECC.generate(curve='ed25519')
     }
@@ -82,7 +82,7 @@ def sign_eddsa(key_source, message = b'To be signed'): #signer for eddsa
     return key, signature
 
 
-def verify_eddsa(key, signature, message = b'To be signed'):
+def verify_eddsa(key, signature, message=b'To be signed'):
     try:
         hashes = {
             '1': SHA256.new(message),
@@ -97,7 +97,7 @@ def verify_eddsa(key, signature, message = b'To be signed'):
         print("The signature is not valid.")
 
 
-def sign_dsa(hash_chosen, key_source, message = b'To be signed'): #signer for dsa
+def sign_dsa(hash_chosen, key_source, message=b'To be signed'):  # signer for dsa
     keys = {
         'generate': DSA.generate(2048)
     }
@@ -113,7 +113,7 @@ def sign_dsa(hash_chosen, key_source, message = b'To be signed'): #signer for ds
     return key, signature
 
 
-def verify_dsa(hash_chosen, key, signature, message = b'To be signed'):
+def verify_dsa(hash_chosen, key, signature, message=b'To be signed'):
     try:
         hashes = {
             '1': SHA256.new(message),
@@ -128,7 +128,7 @@ def verify_dsa(hash_chosen, key, signature, message = b'To be signed'):
         print("The signature is not valid.")
 
 
-def sign_ecdsa(hash_chosen, key_source, message = b'To be signed'): #signer for eddsa
+def sign_ecdsa(hash_chosen, key_source, message=b'To be signed'):  # signer for eddsa
     keys = {
         'generate': ECC.generate(curve='P-521')
     }
@@ -144,7 +144,7 @@ def sign_ecdsa(hash_chosen, key_source, message = b'To be signed'): #signer for 
     return key, signature
 
 
-def verify_ecdsa(hash_chosen, key, signature, message = b'To be signed'):
+def verify_ecdsa(hash_chosen, key, signature, message=b'To be signed'):
     try:
         hashes = {
             '1': SHA256.new(message),
@@ -160,7 +160,6 @@ def verify_ecdsa(hash_chosen, key, signature, message = b'To be signed'):
 
 
 # message = b'To be signed'
-
 
 
 if __name__ == "__main__":

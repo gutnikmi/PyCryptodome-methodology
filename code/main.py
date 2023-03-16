@@ -19,7 +19,6 @@ if __name__ == "__main__":
     print("1. Подписать/проверить сообщение \n")
     print("2. Подобрать алгоритм подписи \n")
 
-
     match input():
         case '1':
             print("Выберите Хэш:"
@@ -27,7 +26,7 @@ if __name__ == "__main__":
                   " \n2. SHA384"
                   " \n3. Sha512")
             h = input()
-            if h != '1' or h != '2' or h != '3':
+            if h != "1" and h != "2" and h != "1":
                 print("Неправильный Хэш")
                 sys.exit()
             print("Выберите источник ключа:"
@@ -48,7 +47,7 @@ if __name__ == "__main__":
                         sys.exit()
 
             print("Введите сообщение которое необходимо подписать/проверить подпись")
-            m = input()
+            m = input().encode('utf-8')
             print("Выберите алгоритм:"
                   " \n 1. Rsa PKCS#1 v1.5"
                   " \n 2. Rsa PKCS#1 PSS"
@@ -68,4 +67,3 @@ if __name__ == "__main__":
         case _:
             print("Неправильное действие")
             sys.exit()
-

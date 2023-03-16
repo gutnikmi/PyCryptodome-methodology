@@ -179,5 +179,5 @@ if __name__ == "__main__":
             key, signature = sign_dsa('1', 'generate')
             verify_dsa('1', key, signature)
         case "4":
-            key, signature = sign_ecdsa('2', 'generate') # hash only 2 or 3
+            key, signature = sign_ecdsa('2', 'generate')
             verify_ecdsa('2', key, signature)

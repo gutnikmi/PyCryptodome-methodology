@@ -26,7 +26,7 @@ if __name__ == "__main__":
                   " \n2. SHA384"
                   " \n3. Sha512")
             h = input()
-            if h != "1" and h != "2" and h != "1":
+            if h != "1" and h != "2" and h != "3":
                 print("Неправильный Хэш")
                 sys.exit()
             print("Выберите источник ключа:"
@@ -38,13 +38,10 @@ if __name__ == "__main__":
                 k = 'generate'
             else:
                 if s == "2":
-                    k = 'paste'
+                    k = 'import'
                 else:
-                    if s == "3":
-                        k = 'import'
-                    else:
-                        print("Неправильный источник ключа")
-                        sys.exit()
+                    print("Неправильный источник ключа")
+                    sys.exit()
 
             print("Введите сообщение которое необходимо подписать/проверить подпись")
             m = input().encode('utf-8')
@@ -55,13 +52,21 @@ if __name__ == "__main__":
                   " \n 4. DSA"
                   " \n 5. ECDSA")
             a = input()
+            if a != "1" and a != "2" and a != "3" and a != "4" and a != "5":
+                print("Неподдерживаемый алгоритм")
+                sys.exit()
             print("Выберите действие:"
                   "\n1. Подписать"
                   "\n2. Проверить подпись ")
-            if input() == '1':
+            act = input()
+            if act != '1' and act != '2':
+                print("Неправильное действие")
+                sys.exit()
+            if act == '1':
                 print(signer_func(a, h, k, m))
-            if input() == '2':
+            if act == '2':
                 pass
+
         case '2':
             pass  # подбор алгоритма
         case _:

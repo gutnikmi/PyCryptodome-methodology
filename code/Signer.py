@@ -28,23 +28,29 @@ def generate_rsa_key():
     return key
 
 
-def import_ecc_key():
-    with open('ECC/private_rsa.pem', 'rt') as f:
+def import_eddsa_key():
+    with open('EdDSA/private_eddsa.pem', 'rt') as f:
         key = ECC.import_key(f.read())
         return key
 
 
-def generate_ecc_key():
+def generate_eddsa_key():
     key = ECC.generate(curve='ed25519')
     a = input("Would you like to save the key on your device?\n"
               "(Warning! this will erase the previous key of that type in the keys folder)\n"
               "press y to save / n to skip\n")
     if a == 'y':
-        with open('ECC/private_ecc.pem', 'wt') as f:
+        with open('EdDSA/private_eddsa.pem', 'wt') as f:
             f.write(key.export_key(format='PEM'))
-        with open('ECC/public_ecc.pem', 'wt') as f:
+        with open('EdDSA/public_eddsa.pem', 'wt') as f:
             f.write(key.public_key().export_key(format='PEM'))
     return key
+
+
+def import_dsa_key():
+    with open('DSA/private_dsa.pem', 'rt') as f:
+        key = DSA.import_key(f.read())
+        return key
 
 
 def generate_dsa_key():  # todo
@@ -58,6 +64,26 @@ def generate_dsa_key():  # todo
         with open('DSA/public_dsa.pem', 'wb') as f:
             f.write(key.publickey().export_key('PEM'))
     return key
+
+
+def import_ecdsa_key():
+    with open('ECDSA/private_ecdsa.pem', 'rt') as f:
+        key = ECC.import_key(f.read())
+        return key
+
+
+def generate_ecdsa_key():
+    key = ECC.generate(curve='P-521')
+    a = input("Would you like to save the key on your device?\n"
+              "(Warning! this will erase the previous key of that type in the keys folder)\n"
+              "press y to save / n to skip\n")
+    if a == 'y':
+        with open('ECDSA/private_ecdsa.pem', 'wt') as f:
+            f.write(key.export_key(format='PEM'))
+        with open('ECDSA/public_ecdsa.pem', 'wt') as f:
+            f.write(key.public_key().export_key(format='PEM'))
+    return key
+
 
 def sign_pkcs1(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 v1.5
     # print(key_source)
@@ -121,8 +147,8 @@ def verify_pss(hash_chosen, key, signature, message=b'To be signed'):
 
 def sign_eddsa(key_source, message=b'To be signed'):  # signer for eddsa
     keys = {
-        'generate': generate_ecc_key,
-        'import': import_ecc_key
+        'generate': generate_eddsa_key,
+        'import': import_eddsa_key
     }
     key = keys[key_source]()
     h = SHA512.new(message)
@@ -141,7 +167,7 @@ def verify_eddsa(key = None, signature = None, message=b'To be signed'):
     try:
         h = SHA512.new(message)
         if key is None and signature is None:
-            with open('ECC/public_ecc.pem', 'r') as f:
+            with open('EdDSA/public_eddsa.pem', 'r') as f:
                 key = ECC.import_key(f.read())
             with open('Signatures/signature_eddsa.txt', 'rb') as f:
                 signature = f.read()
@@ -153,19 +179,29 @@ def verify_eddsa(key = None, signature = None, message=b'To be signed'):
 
 def sign_dsa(hash_chosen, key_source, message=b'To be signed'):  # signer for dsa
     keys = {
-        'generate': generate_dsa_key
+        'generate': generate_dsa_key,
+        'import': import_dsa_key
     }
     key = keys[key_source]()
     h = hashes[hash_chosen](message)
     signature = DSS.new(key, 'fips-186-3').sign(h)
-    # print(key)
+    a = input("Would you like to save the signature on your device?\n"
+              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+              "press y to save / n to skip\n")
+    if a == 'y':
+        with open('Signatures/signature_dsa.txt', 'wb') as f:
+            f.write(signature)
     return key, signature
 
 
-def verify_dsa(hash_chosen, key, signature, message=b'To be signed'):
+def verify_dsa(hash_chosen, key=None, signature=None, message=b'To be signed'):
     try:
         h = hashes[hash_chosen](message)
-        key = key.public_key()
+        if key is None and signature is None:
+            with open('DSA/public_dsa.pem', 'r') as f:
+                key = DSA.import_key(f.read())
+            with open('Signatures/signature_dsa.txt', 'rb') as f:
+                signature = f.read()
         DSS.new(key, 'fips-186-3').verify(h, signature)
         print("The signature is valid.")
     except (ValueError, TypeError):
@@ -174,19 +210,29 @@ def verify_dsa(hash_chosen, key, signature, message=b'To be signed'):
 
 def sign_ecdsa(hash_chosen, key_source, message=b'To be signed'):  # signer for eddsa
     keys = {
-        'generate': ECC.generate(curve='P-521')
+        'generate': generate_ecdsa_key,
+        'import': import_ecdsa_key
     }
-    key = keys[key_source]
+    key = keys[key_source]()
     h = hashes[hash_chosen](message)
     signature = DSS.new(key, 'fips-186-3').sign(h)
-    # print(signature)
+    a = input("Would you like to save the signature on your device?\n"
+              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+              "press y to save / n to skip\n")
+    if a == 'y':
+        with open('Signatures/signature_ecdsa.txt', 'wb') as f:
+            f.write(signature)
     return key, signature
 
 
-def verify_ecdsa(hash_chosen, key, signature, message=b'To be signed'):
+def verify_ecdsa(hash_chosen, key=None, signature=None, message=b'To be signed'):
     try:
         h = hashes[hash_chosen](message)
-        key = key.public_key()
+        if key is None and signature is None:
+            with open('ECDSA/public_ecdsa.pem', 'r') as f:
+                key = ECC.import_key(f.read())
+            with open('Signatures/signature_ecdsa.txt', 'rb') as f:
+                signature = f.read()
         DSS.new(key, 'fips-186-3').verify(h, signature)
         print("The signature is valid.")
     except (ValueError, TypeError) as e:
@@ -200,8 +246,8 @@ if __name__ == "__main__":
     a = "2"
     match a:
         case "0":
-            key, signature = sign_pkcs1('1', 'generate') # input
-            verify_pkcs1('1', signature, key) # verify_pkcs1('1', signature, key)
+            key, signature = sign_pkcs1('1', 'generate') # import
+            verify_pkcs1('1', signature, key)  # verify_pkcs1('1', signature, key)
         case "1":
             key, signature = sign_pss('1', 'generate')
             verify_pss('1', key, signature)

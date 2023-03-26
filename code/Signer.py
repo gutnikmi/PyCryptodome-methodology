@@ -47,6 +47,18 @@ def generate_ecc_key():
     return key
 
 
+def generate_dsa_key():  # todo
+    key = DSA.generate(2048)
+    a = input("Would you like to save the key on your device?\n"
+              "(Warning! this will erase the previous key of that type in the keys folder)\n"
+              "press y to save / n to skip\n")
+    if a == 'y':
+        with open('DSA/private_dsa.pem', 'wb') as f:
+            f.write(key.export_key('PEM'))
+        with open('DSA/public_dsa.pem', 'wb') as f:
+            f.write(key.publickey().export_key('PEM'))
+    return key
+
 def sign_pkcs1(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 v1.5
     # print(key_source)
     keys = {
@@ -141,9 +153,9 @@ def verify_eddsa(key = None, signature = None, message=b'To be signed'):
 
 def sign_dsa(hash_chosen, key_source, message=b'To be signed'):  # signer for dsa
     keys = {
-        'generate': DSA.generate(2048)
+        'generate': generate_dsa_key
     }
-    key = keys[key_source]
+    key = keys[key_source]()
     h = hashes[hash_chosen](message)
     signature = DSS.new(key, 'fips-186-3').sign(h)
     # print(key)
@@ -195,7 +207,7 @@ if __name__ == "__main__":
             verify_pss('1', key, signature)
         case "2":
             key, signature = sign_eddsa('generate')
-            verify_eddsa()
+            verify_eddsa(key, signature)
         case "3":
             key, signature = sign_dsa('1', 'generate')
             verify_dsa('1', key, signature)

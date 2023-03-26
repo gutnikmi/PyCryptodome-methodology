@@ -47,13 +47,32 @@ def generate_eddsa_key():
     return key
 
 
+def import_pure_eddsa_key():
+    with open('PureEdDSA/private_pure_eddsa.pem', 'rt') as f:
+        key = ECC.import_key(f.read())
+        return key
+
+
+def generate_pure_eddsa_key():
+    key = ECC.generate(curve='ed25519')
+    a = input("Would you like to save the key on your device?\n"
+              "(Warning! this will erase the previous key of that type in the keys folder)\n"
+              "press y to save / n to skip\n")
+    if a == 'y':
+        with open('PureEdDSA/private_pure_eddsa.pem', 'wt') as f:
+            f.write(key.export_key(format='PEM'))
+        with open('PureEdDSA/public_pure_eddsa.pem', 'wt') as f:
+            f.write(key.public_key().export_key(format='PEM'))
+    return key
+
+
 def import_dsa_key():
     with open('DSA/private_dsa.pem', 'rt') as f:
         key = DSA.import_key(f.read())
         return key
 
 
-def generate_dsa_key():  # todo
+def generate_dsa_key():
     key = DSA.generate(2048)
     a = input("Would you like to save the key on your device?\n"
               "(Warning! this will erase the previous key of that type in the keys folder)\n"
@@ -177,6 +196,36 @@ def verify_eddsa(key = None, signature = None, message=b'To be signed'):
         print("The signature is not valid.")
 
 
+def sign_pure_eddsa(key_source, message=b'To be signed'):
+    keys = {
+        'generate': generate_pure_eddsa_key,
+        'import': import_pure_eddsa_key
+    }
+    key = keys[key_source]()
+    signature = eddsa.new(key, 'rfc8032').sign(message)
+    a = input("Would you like to save the signature on your device?\n"
+              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+              "press y to save / n to skip\n")
+    if a == 'y':
+        with open('Signatures/signature_pure_eddsa.txt', 'wb') as f:
+            f.write(signature)
+
+    return key, signature
+
+
+def verify_pure_eddsa(key = None, signature = None, message=b'To be signed'):
+    try:
+        if key is None and signature is None:
+            with open('PureEdDSA/public_pure_eddsa.pem', 'r') as f:
+                key = ECC.import_key(f.read())
+            with open('Signatures/signature_pure_eddsa.txt', 'rb') as f:
+                signature = f.read()
+        eddsa.new(key, 'rfc8032').verify(message, signature)
+        print("The signature is valid.")
+    except (ValueError, TypeError):
+        print("The signature is not valid.")
+
+
 def sign_dsa(hash_chosen, key_source, message=b'To be signed'):  # signer for dsa
     keys = {
         'generate': generate_dsa_key,
@@ -239,11 +288,12 @@ def verify_ecdsa(hash_chosen, key=None, signature=None, message=b'To be signed')
         print("The signature is not valid.", e)
 
 
+
 # message = b'To be signed'
 
 
 if __name__ == "__main__":
-    a = "2"
+    a = "5"
     match a:
         case "0":
             key, signature = sign_pkcs1('1', 'generate') # import
@@ -260,3 +310,6 @@ if __name__ == "__main__":
         case "4":
             key, signature = sign_ecdsa('2', 'generate')
             verify_ecdsa('2', key, signature)
+        case "5":
+            key, signature = sign_pure_eddsa('generate')
+            verify_pure_eddsa(key, signature)

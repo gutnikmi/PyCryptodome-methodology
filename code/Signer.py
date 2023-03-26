@@ -9,21 +9,40 @@ hashes = {
     }
 
 
-def import_rsa_key():
-    with open('RSA/private_rsa.pem', 'r') as f:
+def import_rsa_v1_5_key():
+    with open('RSA v1.5/private_rsa_v1_5.pem', 'r') as f:
         key = RSA.import_key(f.read())
         return key
 
 
-def generate_rsa_key():
+def generate_rsa_v1_5_key():
     key = RSA.generate(2048)
     a = input("Would you like to save the key on your device?\n"
               "(Warning! this will erase the previous key of that type in the keys folder)\n"
               "press y to save / n to skip\n")
     if a == 'y':
-        with open('RSA/private_rsa.pem', 'wb') as f:
+        with open('RSA v1.5/private_rsa_v1_5.pem', 'wb') as f:
             f.write(key.export_key('PEM'))
-        with open('RSA/public_rsa.pem', 'wb') as f:
+        with open('RSA v1.5/public_rsa_v1_5.pem', 'wb') as f:
+            f.write(key.publickey().export_key('PEM'))
+    return key
+
+
+def import_rsa_pss_key():
+    with open('RSA PSS/private_rsa_pss.pem', 'r') as f:
+        key = RSA.import_key(f.read())
+        return key
+
+
+def generate_rsa_pss_key():
+    key = RSA.generate(2048)
+    a = input("Would you like to save the key on your device?\n"
+              "(Warning! this will erase the previous key of that type in the keys folder)\n"
+              "press y to save / n to skip\n")
+    if a == 'y':
+        with open('RSA PSS/private_rsa_pss.pem', 'wb') as f:
+            f.write(key.export_key('PEM'))
+        with open('RSA PSS/public_rsa_pss.pem', 'wb') as f:
             f.write(key.publickey().export_key('PEM'))
     return key
 
@@ -104,11 +123,11 @@ def generate_ecdsa_key():
     return key
 
 
-def sign_pkcs1(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 v1.5
+def sign_v1_5(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 v1.5
     # print(key_source)
     keys = {
-        'generate': generate_rsa_key,
-        'import': import_rsa_key
+        'generate': generate_rsa_v1_5_key,
+        'import': import_rsa_v1_5_key
     }
     key = keys[key_source]()
     h = hashes[hash_chosen](message)
@@ -117,18 +136,18 @@ def sign_pkcs1(hash_chosen, key_source, message=b'To be signed'):  # signer for 
               "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
               "press y to save / n to skip\n")
     if a == 'y':
-        with open('Signatures/signature_pkcs1.txt', 'wb') as f:
+        with open('Signatures/signature_v1_5.txt', 'wb') as f:
             f.write(signature)
     return key, signature
 
 
-def verify_pkcs1(hash_chosen, signature = None, key=None, message=b'To be signed'):
+def verify_v1_5(hash_chosen, key=None, signature=None, message=b'To be signed'):
     try:
         h = hashes[hash_chosen](message)
         if key is None and signature is None:
-            with open('RSA/public_rsa.pem', 'r') as f:
+            with open('RSA v1.5/public_rsa_v1_5.pem', 'r') as f:
                 key = RSA.import_key(f.read())
-            with open('Signatures/signature_pkcs1.txt', 'rb') as f:
+            with open('Signatures/signature_v1_5.txt', 'rb') as f:
                 signature = f.read()
         pkcs1_15.new(key).verify(h, signature)
         print("The signature is valid.")
@@ -138,8 +157,8 @@ def verify_pkcs1(hash_chosen, signature = None, key=None, message=b'To be signed
 
 def sign_pss(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 PSS
     keys = {
-        'generate': generate_rsa_key,
-        'import': import_rsa_key
+        'generate': generate_rsa_pss_key,
+        'import': import_rsa_pss_key
     }
     key = keys[key_source]()
     h = hashes[hash_chosen](message)
@@ -154,17 +173,21 @@ def sign_pss(hash_chosen, key_source, message=b'To be signed'):  # signer for Rs
     return key, signature
 
 
-def verify_pss(hash_chosen, key, signature, message=b'To be signed'):
+def verify_pss(hash_chosen, key = None, signature = None, message=b'To be signed'):
     try:
         h = hashes[hash_chosen](message)
-        key = key.publickey()
+        if key is None and signature is None:
+            with open('RSA PSS/public_rsa_pss.pem', 'r') as f:
+                key = RSA.import_key(f.read())
+            with open('Signatures/signature_pss.txt', 'rb') as f:
+                signature = f.read()
         pss.new(key).verify(h, signature)
         print("The signature is valid.")
     except (ValueError, TypeError):
         print("The signature is not valid.")
 
 
-def sign_eddsa(key_source, message=b'To be signed'):  # signer for eddsa
+def sign_eddsa(hash_chosen, key_source, message=b'To be signed'):  # signer for eddsa
     keys = {
         'generate': generate_eddsa_key,
         'import': import_eddsa_key
@@ -182,7 +205,7 @@ def sign_eddsa(key_source, message=b'To be signed'):  # signer for eddsa
     return key, signature
 
 
-def verify_eddsa(key = None, signature = None, message=b'To be signed'):
+def verify_eddsa(hash_chosen, key = None, signature = None, message=b'To be signed'):
     try:
         h = SHA512.new(message)
         if key is None and signature is None:
@@ -196,7 +219,7 @@ def verify_eddsa(key = None, signature = None, message=b'To be signed'):
         print("The signature is not valid.")
 
 
-def sign_pure_eddsa(key_source, message=b'To be signed'):
+def sign_pure_eddsa(hash_chosen, key_source, message=b'To be signed'):
     keys = {
         'generate': generate_pure_eddsa_key,
         'import': import_pure_eddsa_key
@@ -213,7 +236,7 @@ def sign_pure_eddsa(key_source, message=b'To be signed'):
     return key, signature
 
 
-def verify_pure_eddsa(key = None, signature = None, message=b'To be signed'):
+def verify_pure_eddsa(hash_chosen, key = None, signature = None, message=b'To be signed'):
     try:
         if key is None and signature is None:
             with open('PureEdDSA/public_pure_eddsa.pem', 'r') as f:
@@ -293,17 +316,17 @@ def verify_ecdsa(hash_chosen, key=None, signature=None, message=b'To be signed')
 
 
 if __name__ == "__main__":
-    a = "5"
+    a = "0"
     match a:
         case "0":
-            key, signature = sign_pkcs1('1', 'generate') # import
-            verify_pkcs1('1', signature, key)  # verify_pkcs1('1', signature, key)
+            key, signature = sign_v1_5('1', 'generate')  # import
+            verify_v1_5('1', key, signature)  # verify_pkcs1('1', signature, key)
         case "1":
             key, signature = sign_pss('1', 'generate')
             verify_pss('1', key, signature)
         case "2":
-            key, signature = sign_eddsa('generate')
-            verify_eddsa(key, signature)
+            key, signature = sign_eddsa('null', 'generate')  # no hash selection
+            verify_eddsa('null', key, signature)
         case "3":
             key, signature = sign_dsa('1', 'generate')
             verify_dsa('1', key, signature)
@@ -311,5 +334,5 @@ if __name__ == "__main__":
             key, signature = sign_ecdsa('2', 'generate')
             verify_ecdsa('2', key, signature)
         case "5":
-            key, signature = sign_pure_eddsa('generate')
-            verify_pure_eddsa(key, signature)
+            key, signature = sign_pure_eddsa('null', 'generate')  # no hash selection
+            verify_pure_eddsa('null', key, signature)

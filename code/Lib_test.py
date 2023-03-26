@@ -27,4 +27,4 @@ try:
     pkcs1_15.new(pk).verify(h, imp_sign)
     print("The signature is valid.")
 except (ValueError, TypeError) as e:
-    print("The signature is not valid.", e)
+    print("The signature is not valid. ", e)

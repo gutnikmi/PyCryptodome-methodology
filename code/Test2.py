@@ -1,10 +1,16 @@
+def func_a():
+    print("god")
 
-def func():
-    global a
-    a+=1
+def func_b():
+    print("dog")
 
 
-if __name__ == '__main__':
-    a = 3
-    func()
-    print(a)
+dict1 = {
+    '1': func_a,
+    '2': func_b
+}
+a = input()
+dict1[a]()
+
+
+

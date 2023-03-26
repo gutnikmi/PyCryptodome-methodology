@@ -14,10 +14,14 @@ def signer_func(alg, hash_chosen, key_source, message):
     return signers[alg](hash_chosen, key_source, message)
 
 
+def verifier_func(alg, hash_chosen, key_source, message):
+    pass
+
+
 if __name__ == "__main__":
     print("Что вы хотите сделать? (введите номер варианта без точки) \n")
-    print("1. Подписать/проверить сообщение \n")
-    print("2. Подобрать алгоритм подписи \n")
+    print("1.Подписать/проверить сообщение \n")
+    print("2.Подобрать алгоритм подписи \n")
 
     match input():
         case '1':

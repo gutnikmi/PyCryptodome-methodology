@@ -1,16 +1,5 @@
-def func_a():
-    print("god")
+list1 = ['a', 'b', 'c', 'd']
 
-def func_b():
-    print("dog")
-
-
-dict1 = {
-    '1': func_a,
-    '2': func_b
-}
-a = input()
-dict1[a]()
-
-
-
+for id, el in enumerate(list1):
+    print(el)
+    print(list1[id])

@@ -9,17 +9,20 @@ hashes = {
     }
 
 
-def import_rsa_v1_5_key():
+def import_rsa_v1_5_key(a):
     with open('RSA v1.5/private_rsa_v1_5.pem', 'r') as f:
         key = RSA.import_key(f.read())
         return key
 
 
-def generate_rsa_v1_5_key():
+def generate_rsa_v1_5_key(a=''):
     key = RSA.generate(2048)
-    a = input("Would you like to save the key on your device?\n"
-              "(Warning! this will erase the previous key of that type in the keys folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the key on your device?\n"
+                  "(Warning! this will erase the previous key of that type in the keys folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('RSA v1.5/private_rsa_v1_5.pem', 'wb') as f:
             f.write(key.export_key('PEM'))
@@ -28,17 +31,20 @@ def generate_rsa_v1_5_key():
     return key
 
 
-def import_rsa_pss_key():
+def import_rsa_pss_key(a):
     with open('RSA PSS/private_rsa_pss.pem', 'r') as f:
         key = RSA.import_key(f.read())
         return key
 
 
-def generate_rsa_pss_key():
+def generate_rsa_pss_key(a=''):
     key = RSA.generate(2048)
-    a = input("Would you like to save the key on your device?\n"
-              "(Warning! this will erase the previous key of that type in the keys folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the key on your device?\n"
+                  "(Warning! this will erase the previous key of that type in the keys folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('RSA PSS/private_rsa_pss.pem', 'wb') as f:
             f.write(key.export_key('PEM'))
@@ -47,17 +53,20 @@ def generate_rsa_pss_key():
     return key
 
 
-def import_eddsa_key():
+def import_eddsa_key(a):
     with open('EdDSA/private_eddsa.pem', 'rt') as f:
         key = ECC.import_key(f.read())
         return key
 
 
-def generate_eddsa_key():
+def generate_eddsa_key(a=''):
     key = ECC.generate(curve='ed25519')
-    a = input("Would you like to save the key on your device?\n"
-              "(Warning! this will erase the previous key of that type in the keys folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the key on your device?\n"
+                  "(Warning! this will erase the previous key of that type in the keys folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('EdDSA/private_eddsa.pem', 'wt') as f:
             f.write(key.export_key(format='PEM'))
@@ -66,17 +75,20 @@ def generate_eddsa_key():
     return key
 
 
-def import_pure_eddsa_key():
+def import_pure_eddsa_key(a):
     with open('PureEdDSA/private_pure_eddsa.pem', 'rt') as f:
         key = ECC.import_key(f.read())
         return key
 
 
-def generate_pure_eddsa_key():
+def generate_pure_eddsa_key(a=''):
     key = ECC.generate(curve='ed25519')
-    a = input("Would you like to save the key on your device?\n"
-              "(Warning! this will erase the previous key of that type in the keys folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the key on your device?\n"
+                  "(Warning! this will erase the previous key of that type in the keys folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('PureEdDSA/private_pure_eddsa.pem', 'wt') as f:
             f.write(key.export_key(format='PEM'))
@@ -85,17 +97,20 @@ def generate_pure_eddsa_key():
     return key
 
 
-def import_dsa_key():
+def import_dsa_key(a):
     with open('DSA/private_dsa.pem', 'rt') as f:
         key = DSA.import_key(f.read())
         return key
 
 
-def generate_dsa_key():
+def generate_dsa_key(a=''):
     key = DSA.generate(2048)
-    a = input("Would you like to save the key on your device?\n"
-              "(Warning! this will erase the previous key of that type in the keys folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the key on your device?\n"
+                  "(Warning! this will erase the previous key of that type in the keys folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('DSA/private_dsa.pem', 'wb') as f:
             f.write(key.export_key('PEM'))
@@ -104,17 +119,20 @@ def generate_dsa_key():
     return key
 
 
-def import_ecdsa_key():
+def import_ecdsa_key(a):
     with open('ECDSA/private_ecdsa.pem', 'rt') as f:
         key = ECC.import_key(f.read())
         return key
 
 
-def generate_ecdsa_key():
+def generate_ecdsa_key(a=''):
     key = ECC.generate(curve='P-521')
-    a = input("Would you like to save the key on your device?\n"
-              "(Warning! this will erase the previous key of that type in the keys folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the key on your device?\n"
+                  "(Warning! this will erase the previous key of that type in the keys folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('ECDSA/private_ecdsa.pem', 'wt') as f:
             f.write(key.export_key(format='PEM'))
@@ -123,18 +141,21 @@ def generate_ecdsa_key():
     return key
 
 
-def sign_v1_5(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 v1.5
+def sign_v1_5(hash_chosen, key_source, message=b'To be signed', a=''):  # signer for Rsa PKCS#1 v1.5
     # print(key_source)
     keys = {
         'generate': generate_rsa_v1_5_key,
         'import': import_rsa_v1_5_key
     }
-    key = keys[key_source]()
+    key = keys[key_source](a)
     h = hashes[hash_chosen](message)
     signature = pkcs1_15.new(key).sign(h)
-    a = input("Would you like to save the signature on your device?\n"
-              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the signature on your device?\n"
+                  "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('Signatures/signature_v1_5.txt', 'wb') as f:
             f.write(signature)
@@ -155,17 +176,20 @@ def verify_v1_5(hash_chosen, key=None, signature=None, message=b'To be signed'):
         print("The signature is not valid.")
 
 
-def sign_pss(hash_chosen, key_source, message=b'To be signed'):  # signer for Rsa PKCS#1 PSS
+def sign_pss(hash_chosen, key_source, message=b'To be signed', a = ''):  # signer for Rsa PKCS#1 PSS
     keys = {
         'generate': generate_rsa_pss_key,
         'import': import_rsa_pss_key
     }
-    key = keys[key_source]()
+    key = keys[key_source](a)
     h = hashes[hash_chosen](message)
     signature = pss.new(key).sign(h)
-    a = input("Would you like to save the signature on your device?\n"
-              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the signature on your device?\n"
+                  "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('Signatures/signature_pss.txt', 'wb') as f:
             f.write(signature)
@@ -187,17 +211,20 @@ def verify_pss(hash_chosen, key = None, signature = None, message=b'To be signed
         print("The signature is not valid.")
 
 
-def sign_eddsa(hash_chosen, key_source, message=b'To be signed'):  # signer for eddsa
+def sign_eddsa(hash_chosen, key_source, message=b'To be signed', a = ''):  # signer for eddsa
     keys = {
         'generate': generate_eddsa_key,
         'import': import_eddsa_key
     }
-    key = keys[key_source]()
+    key = keys[key_source](a)
     h = SHA512.new(message)
     signature = eddsa.new(key, 'rfc8032').sign(h)
-    a = input("Would you like to save the signature on your device?\n"
-              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the signature on your device?\n"
+                  "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('Signatures/signature_eddsa.txt', 'wb') as f:
             f.write(signature)
@@ -219,16 +246,19 @@ def verify_eddsa(hash_chosen, key = None, signature = None, message=b'To be sign
         print("The signature is not valid.")
 
 
-def sign_pure_eddsa(hash_chosen, key_source, message=b'To be signed'):
+def sign_pure_eddsa(hash_chosen, key_source, message=b'To be signed', a = ''):
     keys = {
         'generate': generate_pure_eddsa_key,
         'import': import_pure_eddsa_key
     }
-    key = keys[key_source]()
+    key = keys[key_source](a)
     signature = eddsa.new(key, 'rfc8032').sign(message)
-    a = input("Would you like to save the signature on your device?\n"
-              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the signature on your device?\n"
+                  "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('Signatures/signature_pure_eddsa.txt', 'wb') as f:
             f.write(signature)
@@ -249,17 +279,20 @@ def verify_pure_eddsa(hash_chosen, key = None, signature = None, message=b'To be
         print("The signature is not valid.")
 
 
-def sign_dsa(hash_chosen, key_source, message=b'To be signed'):  # signer for dsa
+def sign_dsa(hash_chosen, key_source, message=b'To be signed', a = ''):  # signer for dsa
     keys = {
         'generate': generate_dsa_key,
         'import': import_dsa_key
     }
-    key = keys[key_source]()
+    key = keys[key_source](a)
     h = hashes[hash_chosen](message)
     signature = DSS.new(key, 'fips-186-3').sign(h)
-    a = input("Would you like to save the signature on your device?\n"
-              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the signature on your device?\n"
+                  "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('Signatures/signature_dsa.txt', 'wb') as f:
             f.write(signature)
@@ -280,17 +313,20 @@ def verify_dsa(hash_chosen, key=None, signature=None, message=b'To be signed'):
         print("The signature is not valid.")
 
 
-def sign_ecdsa(hash_chosen, key_source, message=b'To be signed'):  # signer for eddsa
+def sign_ecdsa(hash_chosen, key_source, message=b'To be signed', a = ''):  # signer for eddsa
     keys = {
         'generate': generate_ecdsa_key,
         'import': import_ecdsa_key
     }
-    key = keys[key_source]()
+    key = keys[key_source](a)
     h = hashes[hash_chosen](message)
     signature = DSS.new(key, 'fips-186-3').sign(h)
-    a = input("Would you like to save the signature on your device?\n"
-              "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
-              "press y to save / n to skip\n")
+    if a != '':
+        a = 'y'
+    else:
+        a = input("Would you like to save the signature on your device?\n"
+                  "(Warning! this will erase the previous signature of that type in the signatures folder)\n"
+                  "press y to save / n to skip\n")
     if a == 'y':
         with open('Signatures/signature_ecdsa.txt', 'wb') as f:
             f.write(signature)

@@ -162,7 +162,7 @@ def sign_v1_5(hash_chosen, key_source, message=b'To be signed', a=''):  # signer
     return key, signature
 
 
-def verify_v1_5(hash_chosen, key=None, signature=None, message=b'To be signed'):
+def verify_v1_5(hash_chosen, key=None, signature=None, message=b'To be signed', a = ''):
     try:
         h = hashes[hash_chosen](message)
         if key is None and signature is None:
@@ -171,7 +171,8 @@ def verify_v1_5(hash_chosen, key=None, signature=None, message=b'To be signed'):
             with open('Signatures/signature_v1_5.txt', 'rb') as f:
                 signature = f.read()
         pkcs1_15.new(key).verify(h, signature)
-        print("The signature is valid.")
+        if a == '':
+            print("The signature is valid.")
     except (ValueError, TypeError):
         print("The signature is not valid.")
 
@@ -197,7 +198,7 @@ def sign_pss(hash_chosen, key_source, message=b'To be signed', a = ''):  # signe
     return key, signature
 
 
-def verify_pss(hash_chosen, key = None, signature = None, message=b'To be signed'):
+def verify_pss(hash_chosen, key = None, signature = None, message=b'To be signed', a = ''):
     try:
         h = hashes[hash_chosen](message)
         if key is None and signature is None:
@@ -206,7 +207,8 @@ def verify_pss(hash_chosen, key = None, signature = None, message=b'To be signed
             with open('Signatures/signature_pss.txt', 'rb') as f:
                 signature = f.read()
         pss.new(key).verify(h, signature)
-        print("The signature is valid.")
+        if a == '':
+            print("The signature is valid.")
     except (ValueError, TypeError):
         print("The signature is not valid.")
 
@@ -232,7 +234,7 @@ def sign_eddsa(hash_chosen, key_source, message=b'To be signed', a = ''):  # sig
     return key, signature
 
 
-def verify_eddsa(hash_chosen, key = None, signature = None, message=b'To be signed'):
+def verify_eddsa(hash_chosen, key = None, signature = None, message=b'To be signed', a = ''):
     try:
         h = SHA512.new(message)
         if key is None and signature is None:
@@ -241,7 +243,8 @@ def verify_eddsa(hash_chosen, key = None, signature = None, message=b'To be sign
             with open('Signatures/signature_eddsa.txt', 'rb') as f:
                 signature = f.read()
         eddsa.new(key, 'rfc8032').verify(h, signature)
-        print("The signature is valid.")
+        if a == '':
+            print("The signature is valid.")
     except (ValueError, TypeError):
         print("The signature is not valid.")
 
@@ -266,7 +269,7 @@ def sign_pure_eddsa(hash_chosen, key_source, message=b'To be signed', a = ''):
     return key, signature
 
 
-def verify_pure_eddsa(hash_chosen, key = None, signature = None, message=b'To be signed'):
+def verify_pure_eddsa(hash_chosen, key = None, signature = None, message=b'To be signed', a = ''):
     try:
         if key is None and signature is None:
             with open('PureEdDSA/public_pure_eddsa.pem', 'r') as f:
@@ -274,7 +277,8 @@ def verify_pure_eddsa(hash_chosen, key = None, signature = None, message=b'To be
             with open('Signatures/signature_pure_eddsa.txt', 'rb') as f:
                 signature = f.read()
         eddsa.new(key, 'rfc8032').verify(message, signature)
-        print("The signature is valid.")
+        if a == '':
+            print("The signature is valid.")
     except (ValueError, TypeError):
         print("The signature is not valid.")
 
@@ -299,7 +303,7 @@ def sign_dsa(hash_chosen, key_source, message=b'To be signed', a = ''):  # signe
     return key, signature
 
 
-def verify_dsa(hash_chosen, key=None, signature=None, message=b'To be signed'):
+def verify_dsa(hash_chosen, key=None, signature=None, message=b'To be signed', a = ''):
     try:
         h = hashes[hash_chosen](message)
         if key is None and signature is None:
@@ -308,7 +312,8 @@ def verify_dsa(hash_chosen, key=None, signature=None, message=b'To be signed'):
             with open('Signatures/signature_dsa.txt', 'rb') as f:
                 signature = f.read()
         DSS.new(key, 'fips-186-3').verify(h, signature)
-        print("The signature is valid.")
+        if a == '':
+            print("The signature is valid.")
     except (ValueError, TypeError):
         print("The signature is not valid.")
 
@@ -333,7 +338,7 @@ def sign_ecdsa(hash_chosen, key_source, message=b'To be signed', a = ''):  # sig
     return key, signature
 
 
-def verify_ecdsa(hash_chosen, key=None, signature=None, message=b'To be signed'):
+def verify_ecdsa(hash_chosen, key=None, signature=None, message=b'To be signed', a = ''):
     try:
         h = hashes[hash_chosen](message)
         if key is None and signature is None:
@@ -342,7 +347,8 @@ def verify_ecdsa(hash_chosen, key=None, signature=None, message=b'To be signed')
             with open('Signatures/signature_ecdsa.txt', 'rb') as f:
                 signature = f.read()
         DSS.new(key, 'fips-186-3').verify(h, signature)
-        print("The signature is valid.")
+        if a == '':
+            print("The signature is valid.")
     except (ValueError, TypeError) as e:
         print("The signature is not valid.", e)
 

@@ -2,7 +2,6 @@ from Signer import sign_v1_5, sign_pss, sign_eddsa, sign_dsa, sign_ecdsa, sign_p
 from Signer import verify_v1_5, verify_pss, verify_eddsa, verify_dsa, verify_ecdsa, verify_pure_eddsa
 import sys
 
-
 def signer_func(alg, hash_chosen, key_source, message):
     signers = {
         '1': sign_v1_5,

@@ -355,8 +355,8 @@ if __name__ == "__main__":
     a = "0"
     match a:
         case "0":
-            key, signature = sign_v1_5('1', 'generate')  # import
-            verify_v1_5('1', key, signature)  # verify_pkcs1('1', signature, key)
+            key, signature = sign_v1_5('1', 'import')  # import
+            verify_v1_5('1')  # verify_pkcs1('1', signature, key)
         case "1":
             key, signature = sign_pss('1', 'generate')
             verify_pss('1', key, signature)

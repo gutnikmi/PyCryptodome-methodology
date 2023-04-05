@@ -12,7 +12,8 @@ for id, sign in enumerate(signers):
         start_t = time.time()
         sign(hash, 'import', b'To be signed', 'm')
         sign_t = time.time() - start_t
+        pre_ver = time.time()
         verifiers[id](hash, None, None, b'To be signed', 'm')
-        verify_time = time.time() - sign_t  # todo shows current time
+        verify_time = time.time() - pre_ver
         total_time = time.time() - start_t
         print("time to sign: ", f'{sign_t:.4f}', "time to verify:", f'{verify_time:.4f}', "time_total:", f'{total_time:.4f}')

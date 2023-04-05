@@ -1,11 +1,11 @@
-from Signer import sign_v1_5, sign_pss, sign_eddsa, sign_dsa, sign_ecdsa, sign_pure_eddsa
-from Signer import verify_v1_5, verify_pss, verify_eddsa, verify_dsa, verify_ecdsa, verify_pure_eddsa
+from Signer import sign_rsa_v1_5, sign_rsa_pss, sign_eddsa, sign_dsa, sign_ecdsa, sign_pure_eddsa
+from Signer import verify_rsa_v1_5, verify_rsa_pss, verify_eddsa, verify_dsa, verify_ecdsa, verify_pure_eddsa
 import sys
 
 def signer_func(alg, hash_chosen, key_source, message):
     signers = {
-        '1': sign_v1_5,
-        '2': sign_pss,
+        '1': sign_rsa_v1_5,
+        '2': sign_rsa_pss,
         '3': sign_dsa,
         '4': sign_ecdsa,
         '5': sign_eddsa,
@@ -16,8 +16,8 @@ def signer_func(alg, hash_chosen, key_source, message):
 
 def verifier_func(alg, hash_chosen, key, signature, message):
     verifiers = {
-        '1': verify_v1_5,
-        '2': verify_pss,
+        '1': verify_rsa_v1_5,
+        '2': verify_rsa_pss,
         '3': verify_dsa,
         '4': verify_ecdsa,
         '5': verify_eddsa,

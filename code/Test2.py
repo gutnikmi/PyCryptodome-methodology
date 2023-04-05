@@ -1,5 +1,6 @@
-list1 = ['a', 'b', 'c', 'd']
+import time
 
-for id, el in enumerate(list1):
-    print(el)
-    print(list1[id])
+a = time.time()
+time.sleep(1)
+b = time.time() - a
+print(f'{b:.4f}')

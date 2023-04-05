@@ -141,7 +141,7 @@ def generate_ecdsa_key(a=''):
     return key
 
 
-def sign_v1_5(hash_chosen, key_source, message=b'To be signed', a=''):  # signer for Rsa PKCS#1 v1.5
+def sign_rsa_v1_5(hash_chosen, key_source, message=b'To be signed', a=''):  # signer for Rsa PKCS#1 v1.5
     # print(key_source)
     keys = {
         'generate': generate_rsa_v1_5_key,
@@ -162,7 +162,7 @@ def sign_v1_5(hash_chosen, key_source, message=b'To be signed', a=''):  # signer
     return key, signature
 
 
-def verify_v1_5(hash_chosen, key=None, signature=None, message=b'To be signed', a = ''):
+def verify_rsa_v1_5(hash_chosen, key=None, signature=None, message=b'To be signed', a = ''):
     try:
         h = hashes[hash_chosen](message)
         if key is None and signature is None:
@@ -177,7 +177,7 @@ def verify_v1_5(hash_chosen, key=None, signature=None, message=b'To be signed', 
         print("The signature is not valid.")
 
 
-def sign_pss(hash_chosen, key_source, message=b'To be signed', a = ''):  # signer for Rsa PKCS#1 PSS
+def sign_rsa_pss(hash_chosen, key_source, message=b'To be signed', a = ''):  # signer for Rsa PKCS#1 PSS
     keys = {
         'generate': generate_rsa_pss_key,
         'import': import_rsa_pss_key
@@ -198,7 +198,7 @@ def sign_pss(hash_chosen, key_source, message=b'To be signed', a = ''):  # signe
     return key, signature
 
 
-def verify_pss(hash_chosen, key = None, signature = None, message=b'To be signed', a = ''):
+def verify_rsa_pss(hash_chosen, key = None, signature = None, message=b'To be signed', a = ''):
     try:
         h = hashes[hash_chosen](message)
         if key is None and signature is None:
@@ -361,11 +361,11 @@ if __name__ == "__main__":
     a = "0"
     match a:
         case "0":
-            key, signature = sign_v1_5('1', 'import')  # import
-            verify_v1_5('1')  # verify_pkcs1('1', signature, key)
+            key, signature = sign_rsa_v1_5('1', 'import')  # import
+            verify_rsa_v1_5('1')  # verify_pkcs1('1', signature, key)
         case "1":
-            key, signature = sign_pss('1', 'generate')
-            verify_pss('1', key, signature)
+            key, signature = sign_rsa_pss('1', 'generate')
+            verify_rsa_pss('1', key, signature)
         case "2":
             key, signature = sign_eddsa('null', 'generate')  # no hash selection
             verify_eddsa('null', key, signature)

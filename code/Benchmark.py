@@ -26,9 +26,9 @@ for mode in modes:
             verifiers[id](hash, None, None, b'To be signed', 'm')
             verify_time = time.time() - pre_ver
             total_time = time.time() - start_t
-            alg.append(f'{sign_t:.4f}')
-            alg.append(f'{verify_time:.4f}')
-            alg.append(f'{total_time:.4f}')
+            alg.append(f'{sign_t:.5f}')
+            alg.append(f'{verify_time:.5f}')
+            alg.append(f'{total_time:.5f}')
             result.append(alg)
             alg = []
             # print("time to sign: ", f'{sign_t:.4f}', "time to verify:", f'{verify_time:.4f}', "time_total:", f'{total_time:.4f}')
@@ -42,13 +42,11 @@ for mode in modes:
         n_h_v[id]('', None, None, b'To be signed', 'm')
         verify_time = time.time() - pre_ver
         total_time = time.time() - start_t
-        alg.append(f'{sign_t:.4f}')
-        alg.append(f'{verify_time:.4f}')
-        alg.append(f'{total_time:.4f}')
+        alg.append(f'{sign_t:.5f}')
+        alg.append(f'{verify_time:.5f}')
+        alg.append(f'{total_time:.5f}')
         result.append(alg)
         alg = []
-    # for res in result:
-    #     print(res)
     with open('{0}.csv'.format(mode), 'w', newline='') as myFile:
         writer = csv.writer(myFile, delimiter=';')
         writer.writerows(result)

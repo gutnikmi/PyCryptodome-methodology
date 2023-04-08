@@ -13,7 +13,7 @@ def bench():
     hashes = ['1', '2', '3']
     result = [['algorithm', 'hash', 'sign', 'verify', 'total']]
     alg = []
-    modes = ['import']# , 'generate'
+    modes = ['import', 'generate']#
     for mode in modes:
         print("Performing ", mode, "benchamrk")
         for id, sign in enumerate(signers):

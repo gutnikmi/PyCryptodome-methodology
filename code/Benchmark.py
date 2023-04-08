@@ -13,7 +13,7 @@ def bench():
     hashes = ['1', '2', '3']
     result = [['algorithm', 'hash', 'sign', 'verify', 'total']]
     alg = []
-    modes = ['import', 'generate']
+    modes = ['import']# , 'generate'
     for mode in modes:
         print("Performing ", mode, "benchamrk")
         for id, sign in enumerate(signers):
@@ -54,7 +54,7 @@ def bench():
             alg.append(f'{total_time:.5f}')
             result.append(alg)
             alg = []
-        with open('{0}.csv'.format(mode), 'w', newline='') as myFile:
+        with open('Benchmarks\{0}.csv'.format(mode), 'w', newline='') as myFile:
             writer = csv.writer(myFile, delimiter=';')
             writer.writerows(result)
             result = [['algorithm', 'hash', 'sign', 'verify', 'total']]
@@ -63,11 +63,11 @@ def bench():
 
 def show_bench():
     print("import benchmark")
-    with open("import.csv") as fp:
+    with open("Benchmarks\import.csv") as fp:
         table = from_csv(fp)
         print(table)
     print("generate benchmark")
-    with open("generate.csv") as fp:
+    with open("Benchmarks\generate.csv") as fp:
         table = from_csv(fp)
         print(table)
 

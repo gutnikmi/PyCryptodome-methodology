@@ -31,19 +31,19 @@ alg_used = 4
 if inp == 1:
     message = b'To be signed'
 elif inp == 2:
-    pass  # TODO
+    pass
 else:
     raise Exception(f"Failed to load input \n")
 
 # key import
 if key_used == 1:
     key = RSA.generate(2048)
-    key2 = ECC.generate(curve='ed25519') # todo размерность ключей в презентации 8
+    key2 = ECC.generate(curve='ed25519') # размерность 2048
     key3 = ECC.generate(curve='P-521') #DSA.generate(2048)
 elif key_used == 2:
     key = RSA.import_key(open('private_key.der').read())
 elif key_used == 3:
-    pass  # TODO
+    pass
 else:
     raise Exception(f"Failed to load key \n")
 

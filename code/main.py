@@ -128,13 +128,39 @@ if __name__ == "__main__":
                 else:
                     print("Wrong action")
                     sys.exit()
-            elif b == '2': # todo
+            elif b == '2':
                 print("What are you going to use the signature for?"
                       "1. Authentication protocols\n"
                       "2. Certificates\n"
                       "3. Blockchain\n"
                       "4. Documents\n"
                       "5. Message authentication\n")
+                match input():
+                    case '1':
+                        print("Recompounded algorithms: pureEdDSA\n"
+                              "Not recommended algorithms: DSA, RSA\n")
+                    case '2':
+                        print("Recompounded algorithms: DSA RSA EdDSA ECDSA\n"
+                              "Not recommended algorithms: - \n")
+                    case '3':
+                        print("Recompounded algorithms: ECDSA EdDSA\n"
+                              "Not recommended algorithms: DSA, RSA, RSA PSS\n")
+                    case '4':
+                        print("Recompounded algorithms: ECDSA, EdDSA\n"
+                              "Not recommended algorithms: DSA, RSA, RSA PSS\n")
+                    case '5':
+                        print("Recompounded algorithms: pureEdDSA, ECDSA, EdDSA, RSA, RSA PSS\n"
+                              "Not recommended algorithms: DSA\n")
+                    case _:
+                        print("wrong action")
+                        sys.exit()
+                if input("Would you like to see the benchmark of all supported signature algorithms?\n"
+                         "y/n") == 'y':
+                    try:
+                        show_bench()
+                    except Exception as e:
+                        print(e)
+                        sys.exit()
             else:
                 print("Wrong action")
                 sys.exit()

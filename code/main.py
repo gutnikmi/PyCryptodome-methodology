@@ -66,7 +66,7 @@ if __name__ == "__main__":
                     sys.exit()
             else:
                 h = None
-            print("Enter the message to be signed")
+            print("Enter the message to be signed or verified")
             m = input().encode('utf-8')
             print("Would you like to: \n"
                   "1.Sign\n"

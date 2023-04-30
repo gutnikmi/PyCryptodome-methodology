@@ -137,19 +137,19 @@ if __name__ == "__main__":
                       "5. Message authentication\n")
                 match input():
                     case '1':
-                        print("Recompounded algorithms: pureEdDSA\n"
-                              "Not recommended algorithms: DSA, RSA\n")
+                        print("Recompounded algorithms: PureEdDSA\n"
+                              "Not recommended algorithms: DSA, RSA v1.5\n")
                     case '2':
-                        print("Recompounded algorithms: DSA RSA EdDSA ECDSA\n"
+                        print("Recompounded algorithms: DSA, RSA v1.5, EdDSA, ECDSA\n"
                               "Not recommended algorithms: - \n")
                     case '3':
-                        print("Recompounded algorithms: ECDSA EdDSA\n"
-                              "Not recommended algorithms: DSA, RSA, RSA PSS\n")
+                        print("Recompounded algorithms: ECDSA, EdDSA\n"
+                              "Not recommended algorithms: DSA, RSA v1.5, RSA PSS\n")
                     case '4':
                         print("Recompounded algorithms: ECDSA, EdDSA\n"
-                              "Not recommended algorithms: DSA, RSA, RSA PSS\n")
+                              "Not recommended algorithms: DSA, RSA v1.5, RSA PSS\n")
                     case '5':
-                        print("Recompounded algorithms: pureEdDSA, ECDSA, EdDSA, RSA, RSA PSS\n"
+                        print("Recompounded algorithms: PureEdDSA, ECDSA, EdDSA, RSA v1.5, RSA PSS\n"
                               "Not recommended algorithms: DSA\n")
                     case _:
                         print("wrong action")

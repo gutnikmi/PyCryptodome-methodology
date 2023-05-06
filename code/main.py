@@ -129,7 +129,7 @@ if __name__ == "__main__":
                     print("Wrong action")
                     sys.exit()
             elif b == '2':
-                print("What are you going to use the signature for?"
+                print("What are you going to use the signature for?\n"
                       "1. Authentication protocols\n"
                       "2. Certificates\n"
                       "3. Blockchain\n"

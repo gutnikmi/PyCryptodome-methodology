@@ -142,7 +142,6 @@ def generate_ecdsa_key(a=''):
 
 
 def sign_rsa_v1_5(hash_chosen, key_source, message=b'To be signed', a=''):  # signer for Rsa PKCS#1 v1.5
-    # print(key_source)
     keys = {
         'generate': generate_rsa_v1_5_key,
         'import': import_rsa_v1_5_key
@@ -194,7 +193,6 @@ def sign_rsa_pss(hash_chosen, key_source, message=b'To be signed', a = ''):  # s
     if a == 'y':
         with open('Signatures/signature_pss.txt', 'wb') as f:
             f.write(signature)
-    # print(signature)
     return key, signature
 
 
@@ -351,10 +349,6 @@ def verify_ecdsa(hash_chosen, key=None, signature=None, message=b'To be signed',
             print("The signature is valid.")
     except (ValueError, TypeError) as e:
         print("The signature is not valid.", e)
-
-
-
-# message = b'To be signed'
 
 
 if __name__ == "__main__":

@@ -57,9 +57,9 @@ if __name__ == "__main__":
                 sys.exit()
             if a != '5' and a != '6':
                 print("Select a Hash algorithm:"
-                      " \n1. SHA256"
-                      " \n2. SHA384"
-                      " \n3. Sha512")
+                      " \n 1. SHA256"
+                      " \n 2. SHA384"
+                      " \n 3. Sha512")
                 h = input()
                 if h != "1" and h != "2" and h != "3":
                     print("Unsupported hash algorithm")
@@ -69,8 +69,8 @@ if __name__ == "__main__":
             print("Enter the message to be signed or verified")
             m = input().encode('utf-8')
             print("Would you like to: \n"
-                  "1.Sign\n"
-                  "2.Verify\n"
+                  " 1.Sign\n"
+                  " 2.Verify\n"
                   "the message?")
             action = input()
             if action == '2':

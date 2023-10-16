@@ -129,7 +129,13 @@ dmypy.json
 .pyre/
 
 #keys
-.pem
+*.pem
 
 #Benchmarks
-.csv
+*.csv
+
+#Signatures
+signature*.txt
+
+#Idea
+.idea
